@@ -20,8 +20,8 @@
 ### Frontend
 - **HTML**: Structure of the webpage.
 - **CSS**: Styling with custom styles and external libraries such as:
-  - [Font Awesome](https://cdnjs.com/libraries/font-awesome) for icons.
-  - [Placeholder Loading](https://unpkg.com/placeholder-loading) for skeleton loaders.
+  - [Font Awesome](https://fontawesome.com/) for icons.
+  - [Placeholder Loading](https://www.npmjs.com/package/placeholder-loading) for skeleton loaders.
 - **JavaScript**: Dynamic behavior, API integration, and user interactions.
 
 ### API Integration
