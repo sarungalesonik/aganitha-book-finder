@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book Finder</title>
+    <link rel="icon" type="image/x-icon" href="icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/placeholder-loading/dist/css/placeholder-loading.min.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="search-layout">
+        <div class="search-box-body">
+            <div class="logo-icon">
+                <img src="logo.png" class="logo-img" alt="">
+                <img src="icon.png" class="icon-img" alt="">
+            </div>
+            <form action="" method="post" class="search-box-form" onsubmit="handlesearch(event)">
+                <input type="text" class="search-box-bar" placeholder="Search Topic..." id="topic-saerch-bar"><button class="search-box-btn" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="search-body">
+        <div class="search-body-layout" id="main-search-body">
+            <div class="search-results-box" id="search-results-box">
+                <div class="search-results" id="search-book-list">                    
+                </div>
+            </div>
+            <div class="book-container-layout" id="book-container-layout">
+                <div id="book-search-gif">
+                    <img src="search.gif" alt="">
+                </div>
+                <div id="book-click-instructions">
+                    <div>Select Book to View Details</div>
+                </div>
+                <div id="book-list-container">
+                </div>
+                
+
+            </div>
+            
+        </div>
+        <div id="not-found-search-body">
+            <div class="not-found-box-content">
+                <div>
+                    Search result not found
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="backbutton" onclick="gobacktobooklist()"><i class="fa-solid fa-angle-left"></i> Back</button>
+    <script src="main.js"></script>
+    <script>
+
+const baseURL = "https://openlibrary.org/search.json?title="
+const imageBaseURL = "https://covers.openlibrary.org/b/id/"
+const gobacktobooklist = () =>{
+    document.getElementById('backbutton').classList.remove("mob-button-active");
+    
+    document.getElementById("search-results-box").classList.remove("mob-hide");
+    document.getElementById("book-container-layout").classList.remove("display-hide");
+
+}
+const bookSearchHandler = () => {
+    let bookBookList = {};
+    let currectBook = "";
+    return {
+        setBookList: function(bookdata){
+            this.bookBookList = bookdata.reduce((acc, item) => {
+                acc[item.cover_edition_key] = item;
+                return acc;
+            }, {});
+        },
+        setCurrectBook: function(bookid){
+            this.currectBook = bookid;
+        },
+        renderList: function() {
+            
+
+            const cardList = document.getElementById('search-book-list');
+            const bookList = document.getElementById('book-list-container');
+            
+            if(!this.bookBookList) return;
+            while(cardList.firstChild){
+                cardList.removeChild(cardList.firstChild);
+            }
+            while(bookList.firstChild){
+                bookList.removeChild(bookList.firstChild);
+            }
+            for (let result_id in this.bookBookList) {
+                if (this.bookBookList.hasOwnProperty(result_id)) {
+                    const paper = this.bookBookList[result_id];
+
+                    const card = bookCard(result_id, paper);
+
+                    cardList.appendChild(card);
+
+                    const book_detail_container = document.createElement('div');
+                    book_detail_container.setAttribute('id', `book_${result_id}`);
+                    book_detail_container.className = 'book-detail-box';
+
+
+                    bookList.appendChild(book_detail_container);
+                }
+
+                
+            };
+        },
+        addBookToSelectedList: function(elm,result_id){
+            this.bookBookList[result_id].is_selected = !this.bookBookList[result_id].is_selected;
+            if(this.bookBookList[result_id].is_selected){
+                elm.classList.add('selected');               
+            }else{
+                elm.classList.remove('selected'); 
+            }
+        },        
+        renderBook: function(bookid) {
+            
+            document.getElementById('backbutton').classList.add("mob-button-active");
+
+            document.getElementById("search-results-box").classList.add("mob-hide");
+            document.getElementById("book-container-layout").classList.add("display-hide");
+            
+            //document.getElementById("search-results-box").classList.remove('mob-hide');
+
+            document.getElementById("book-list-container").style.display = 'block';
+            document.getElementById("book-click-instructions").style.display = 'none';
+
+            this.setBookTab();
+            const book = this.bookBookList[bookid];
+            const title = book.title;
+
+            const book_loading = bookLoading();
+            const book_container = document.querySelector(`#book_${bookid}`);
+
+          
+            const docelm = document.querySelector(`#book_${bookid}`);
+            if(!book_container.classList.contains('loaded')) {
+                
+                book_container.append(book_loading);
+                bookBuddy.getBookDetails(bookid).then(data => {
+                    const oldData = this.bookBookList[bookid];
+                    document.getElementById('book-detail-loader').remove();
+                    const bookDetails = renderBookDetails(data,oldData);
+                    book_container.append(bookDetails);
+                    book_container.classList.add('loaded');
+
+                });
+                
+            }
+        },
+        getBookDetails: function(bookid){
+            const bookDetailsURL = `https://openlibrary.org/books/${bookid}.json`
+
+            return fetch(`${bookDetailsURL}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .catch(error => console.log('Error:', error));
+        },
+        searchBook: function(topic){
+
+            return fetch(`${baseURL}${topic}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                return data.docs;
+            })
+            .catch(error => console.log('Error:', error));
+        },
+        setBookTab: function(){
+            const paperelements = document.querySelectorAll('.book-detail-box');
+            paperelements.forEach(element => {
+                if(element.id === `book_${this.currectBook}`){
+                    element.style.display = 'block';
+                }else{                     
+                    element.style.display = 'none';
+                }
+            });
+            const summaryelements = document.querySelectorAll('.summary-box');
+            summaryelements.forEach(element => {
+                element.style.display = 'none';
+            });
+            
+        }, 
+        setBookSearchLoading: function(element, summary){
+            const cardList = document.getElementById('search-book-list');
+            
+            while(cardList.firstChild){
+                cardList.removeChild(cardList.firstChild);
+            }
+
+            for(let i = 0; i < 6 ; i++){
+                const card = placeholderBookCard();
+                cardList.appendChild(card);                
+            }
+        }
+    }
+}
+
+
+const bookBuddy = bookSearchHandler();
+
+const handlesearch = (event) => {
+    event.preventDefault();
+    document.getElementById('backbutton').classList.remove("mob-button-active");
+
+    document.getElementById("search-results-box").classList.remove("mob-hide");
+    document.getElementById("book-container-layout").classList.remove("display-hide");
+    
+    document.querySelector(".search-body").style.display = 'block';
+    document.querySelector(".search-layout").classList.add('header');
+    const topic_text = document.getElementById("topic-saerch-bar").value;
+    bookBuddy.currectBook = "";
+    bookBuddy.setBookTab()
+    if(topic_text.length > 0){
+        document.getElementById("main-search-body").style.display = 'flex';
+        document.getElementById("not-found-search-body").style.display = 'none';
+        bookBuddy.setBookSearchLoading();
+        
+        document.getElementById("book-search-gif").style.display = 'flex';
+        document.getElementById("book-click-instructions").style.display = 'none';
+        document.getElementById("book-list-container").style.display = 'none';
+        
+        bookBuddy.searchBook(topic_text).then(data => {
+            document.getElementById("book-search-gif").style.display = 'none';
+            document.getElementById("book-click-instructions").style.display = 'flex';
+
+            if(data.length > 0){
+                bookBuddy.setBookList(data);
+                bookBuddy.renderList();
+            }else{
+                document.getElementById("main-search-body").style.display = 'none';
+                document.getElementById("not-found-search-body").style.display = 'block';
+            }
+        });
+    }
+
+}
+
+    </script>
+</body>
+</html>

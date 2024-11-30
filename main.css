@@ -1,0 +1,504 @@
+body,html{
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif;
+    height: 100%;
+}
+*{
+    box-sizing: border-box;
+}
+.search-body{
+    display: none;
+    height: calc(100% - 70px);
+}
+.search-layout{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.icon-img{
+    display: none;
+}
+.logo-icon{
+    height: 200px;
+    text-align: center;
+}
+.logo-icon img{
+    height: 100%;
+}
+.search-box-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.header .logo-icon {
+  height: 100%;
+  position: absolute;
+  left: 10px;
+  padding: 10px;
+}
+.header .icon-img{
+    display: block;
+}
+
+.header .logo-img {
+    display: none;
+  }
+
+/* Input box styling */
+.search-box-form .search-box-bar {
+    margin: 0;
+    width: 500px;
+    height: 40px;
+    padding: 0px 15px;
+    letter-spacing: 0.5px;
+    border: none;
+    border-right: none;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #444;
+    background-color: #f5f5f5;
+    border-radius: 4px 0px 0px 4px;
+    transition: background-color 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+/* On focus, add a border and subtle shadow */
+.search-box-form .search-box-bar:focus {
+    background-color: #fff;
+    border: 2px solid #47a3ba;
+    box-shadow: 0 0 10px rgba(108, 99, 255, 0.3);
+}
+
+/* Search button styling */
+.search-box-form .search-box-btn {
+    height: 40px;
+    width: 50px;
+    background-color: #47a3ba;
+    border: none;
+    padding: 0;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 4px 4px 0px;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+
+/* Button hover effect */
+.search-box-form .search-box-btn:hover {
+    background-color: #29545f;
+    box-shadow: 0 0 12px rgb(41, 84, 95, 0.6);
+}
+
+/* Button active state */
+.search-box-form .search-box-btn:active {
+    background-color: #29545f;
+    transform: scale(0.98);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon inside the button */
+.search-box-form .search-box-btn i {
+    font-size: 16px;
+    color: white;
+}
+
+
+.ph-card-item .ph-avatar{
+    border-radius: 4px;
+}
+
+.header{
+    height: 70px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+    position: relative;
+}
+.search-body-layout{
+    display: flex;
+}
+.search-results-box{
+    width: 400px;
+}
+.search-results{
+    width: 100%;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+    background-color: #fff;
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 90;
+}
+.search-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 120px;
+}
+.search-item:hover {
+    background-color: #f0f0f0;
+    border-color: #47a3ba;
+    box-shadow: 0 4px 12px rgba(108, 99, 255, 0.3);
+    transform: translateY(-5px);
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 100%;
+}
+.card-rating-box{
+    color: #555;
+    display: flex;
+    font-size: 12px;
+    margin-top: 10px;
+}
+.card-book-total-counts{
+    width: 50%;
+}
+.card-book-stars{
+    width: 50%;
+    text-align: right;
+}
+.card-title {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-authors {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #555;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-checkbox {
+    margin-right: 10px; 
+}
+
+.card-citations {
+    font-size: 0.8rem;
+    color: #555;
+}
+.card-content{
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+    display: flex;
+}
+canvas {
+    display: block;
+    margin: auto;
+}
+.book-container-layout{
+    width: calc(100% - 400px);
+}
+.book-detail-box{
+    display: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: relative;
+}
+.book-detail-box .ph-item{
+    border: none;
+}
+.summary-box{
+    display: none;
+}
+.select-button {
+    border: 1px solid #4CAF50;
+    color: #4CAF50;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    background: #fff;
+    transition: 0.6s ease;
+    font-size: 12px;
+}
+.select-button:hover{
+    background-color: #4CAF50;
+    color: #fff;
+}
+.select-button.selected{
+    background-color: #4CAF50;
+    color: #fff;    
+}
+.summary-btn-container{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.summary-btn-container .generate-button{
+    border: 1px solid #47a3ba;
+    color: #47a3ba;
+    background-color: transparent;
+    border-radius: 50px;
+    padding: 5px 10px;
+    letter-spacing: 0.5px;
+    transition: 0.6s all ease;
+    cursor: pointer;
+}
+.summary-btn-container .generate-button:hover{
+    color: #fff;
+    background-color: #47a3ba;
+}
+.summary-btn-box{
+    text-align: center;
+}
+.summary-btn-container p{
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+/* Positioning the Add button to the right */
+.card-citations-container {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Align items vertically */
+    justify-content: space-between; /* Space out items */
+}
+.chat-button-box{
+    height: 65px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 9999;
+    padding: 15px;
+}
+#book-list-container{
+    height: calc(100vh - 70px);
+    padding: 30px;
+    padding-bottom: 0px;
+    display: none;
+}
+.tab {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.tab:hover {
+    background-color: #e0e0e0;
+}
+
+.tab.active {
+    background-color: #47a3ba;
+    color: white;
+    font-weight: bold;
+}
+
+.tab-content {
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.summary-box{
+  overflow-x: scroll;
+  height: 100%;
+  padding: 50px 80px;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: justify;
+  text-indent: 20px;
+}
+.summary-box h3{
+    text-align: center;
+}
+.ph-card-item{
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+.book-data-card .ph-avatar::before{
+    content: none;
+}
+.book-data-card .ph-avatar img{
+    height: 100%;
+    max-width: 100%;
+}
+.book-data-card .ph-avatar{
+    border-radius: 4px;
+    background-color: transparent;
+}
+.book-data-card .ph-row div{
+    background-color: transparent;
+}
+.book-data-card.ph-item::before{
+    content: none;
+}
+.card-book-img{
+    width: 20%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.card-book-img img{
+    position: absolute;
+    top: 50%;
+    width: auto;
+    height: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+}
+.card-text-content{
+    width: calc(80% - 20px);
+}
+.book-details-container{
+    padding: 50px;
+}
+.book-detail-img{
+    height: 300px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.book-detail-img img{
+    height: 100%;
+    width: auto;
+}
+.book-detail-title{
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+    margin-top: 25px;
+}
+.book-detail-authors{
+    font-size: 15px;
+  text-align: center;
+  margin-top: 5px;
+  color: #323232;
+}
+.book-detail-description{
+    font-size: 14px;
+    color: #3b3b3b;
+    text-align: justify;
+    margin-top: 20px;
+}
+.book-detail-notes{
+    font-size: 14px;
+    color: #3b3b3b;
+    text-align: justify;
+    margin-top: 20px;
+}
+.not-found-box-content{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#not-found-search-body{
+    height: 100%;
+    display: none;
+}
+#book-search-gif{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+#book-search-gif img{
+    height: 300px;
+}
+#book-click-instructions{
+    display: none;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+#backbutton{
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    z-index: 9999999999;
+    background-color: #29545f;
+    color: #fff;
+    border: 1px solid #29545f;
+    padding: 5px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    display: none;
+}
+.mob-button-active{
+    display: none;
+}
+@media (max-width: 1000px) {
+    .mob-button-active{
+        display: block !important;
+    }
+    #main-search-body {
+        display: block;
+    }
+    .search-results-box{
+        width: 100%;
+    }
+    .book-container-layout{
+        display: none;
+        width: 100%;
+    }
+    .mob-hide{
+        display: none;
+    }
+    .display-hide{
+        display: block;
+    }
+    #book-list-container{
+        width: 100%;
+    }
+    .card-book-img{
+        width: 80px;
+    }
+    .card-text-content{
+        width: calc((100% - 80px) - 20px);
+    }
+}
+@media (max-width: 600px) {
+    .logo-icon{
+        height: 100px;
+    }
+    .search-box-body{
+        width: 100%;
+    }
+    .search-box-form{
+        width: 90%;
+        margin: 20px auto;
+    }
+    .header .icon-img{
+        display: none;
+    }
+    #book-list-container{
+        padding: 20px;
+    }
+}
